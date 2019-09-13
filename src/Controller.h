@@ -22,56 +22,26 @@
  * THE SOFTWARE.
  */
 
+#ifndef CONTROLLER_H
+#define CONTROLLER_H
+
+#include <vector>
+
+#include "Renderer.h"
 #include "DeckOfCards.h"
 
+class Controller {
+public:
+    Controller();
+    Controller(const Controller& orig);
+    virtual ~Controller();
 
-DeckOfCards::DeckOfCards() {
-    card_to_deal = 0;
-    reshuffle = 0;
-    shuffle = true;
-    CreateShoe();
-}
+    void GameLoop(Renderer rend);
+    void Test(Renderer rend);
 
-DeckOfCards::~DeckOfCards() {
-}
+private:
+    DeckOfCards deck;
+};
 
-void DeckOfCards::Shuffle() {
-    // random number generator set-up
-    std::random_device ran_dev;
-    std::mt19937 ran_engine(ran_dev());
-    std::uniform_int_distribution<int> card_to_swap(0, 51);
-    std::uniform_int_distribution<int> reshuffle_card(35, 42);
+#endif /* CONTROLLER_H */
 
-    Card *temp;
-    std::size_t swap;
-
-    for (std::size_t card = cards_in_deck - 1; card > 0; card--) {
-        swap = card_to_swap(ran_engine) % card;
-
-        temp = shoe[swap];
-        shoe[swap] = shoe[card];
-        shoe[card] = temp;
-    }
-
-    card_to_deal = 0;
-    reshuffle = reshuffle_card(ran_engine);
-    shuffle = false;
-
-    return;
-}
-
-void DeckOfCards::CreateShoe() {
-    shoe = new Card*[cards_in_deck];
-
-    int i, rank;
-    for (i = 0; i < cards_in_deck; i++) {
-        rank = i /26;
-        shoe[i] = new Card(rank % 2 ? reds[i % 13] : blacks[i % 13],
-                        suits[i / 13],
-                        values[i % 13]);
-    }
-}
-
-int DeckOfCards::DealCard() {
-    return card_to_deal++;
-}

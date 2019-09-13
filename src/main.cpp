@@ -22,32 +22,28 @@
  * THE SOFTWARE.
  */
 #include <iostream>
-
+#include <vector>
 #include <SDL2/SDL.h>
 
 #include "Renderer.h"
+#include "DeckOfCards.h"
+#include "Controller.h"
 
 /****** CONSTANTS ******/
-const std::size_t WINDOW_WIDTH  = 640;
+const std::size_t WINDOW_WIDTH = 640;
 const std::size_t WINDOW_HEIGHT = 480;
-
 
 /***** *****/
 int main(int, char**) {
-    Renderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT);
-    renderer.Render();
-
-    SDL_Event event;
-    bool quit = false;
-
-    while(!quit) {
-        while(SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                quit = true;
-            }
+    // Start up SDL
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) == 0) {
+        // Started up fine, continue
+        Renderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT);
+        Controller game;
+        if (renderer.RendererValid()) {
+            game.Test(renderer);
         }
+
+        return 0;
     }
-
-    return 0;
 }
-

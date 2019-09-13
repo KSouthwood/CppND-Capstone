@@ -28,13 +28,21 @@
 #include <iostream>
 #include <string>
 #include <SDL2/SDL.h>
+#include <vector>
+
+#include "DeckOfCards.h"
+#include "Card.h"
+
+const static std::size_t CARD_WIDTH  = 100;
+const static std::size_t CARD_HEIGHT = 150;
 
 class Renderer {
 public:
     Renderer(const std::size_t window_width, const std::size_t window_height);
     ~Renderer();
 
-    void Render();
+    void Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck);
+    bool RendererValid();
 
 private:
     SDL_Window *window;
@@ -43,15 +51,22 @@ private:
     const std::size_t window_width;
     const std::size_t window_height;
 
-    void logSDLerror(std::ostream &os, const std::string &msg);
-
     // Card positions
-    const SDL_Rect dealer0 = {.x =  20, .y = 20, .w = 80, .h = 100};
-    const SDL_Rect dealer1 = {.x = 120, .y = 20, .w = 80, .h = 100};
-    const SDL_Rect dealer2 = {.x = 220, .y = 20, .w = 80, .h = 100};
-    const SDL_Rect dealer3 = {.x = 320, .y = 20, .w = 80, .h = 100};
-    const SDL_Rect dealer4 = {.x = 420, .y = 20, .w = 80, .h = 100};
+    const SDL_Rect d_pos[5] = {
+        {.x =  30, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 150, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 270, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 390, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 510, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT}
+    };
 
+    const SDL_Rect p_pos[5] = {
+        {.x =  30, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 150, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 270, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 390, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 510, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT}
+    };
 };
 
 #endif /* RENDERER_H */
