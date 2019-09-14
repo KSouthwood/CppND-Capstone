@@ -41,7 +41,7 @@ int main(int, char**) {
         Renderer renderer(WINDOW_WIDTH, WINDOW_HEIGHT);
         Controller game;
         if (renderer.RendererValid()) {
-            game.Test(renderer);
+            game.GameLoop(&renderer);
         }
 
         return 0;

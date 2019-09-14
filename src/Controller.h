@@ -33,14 +33,27 @@
 class Controller {
 public:
     Controller();
-    Controller(const Controller& orig);
     virtual ~Controller();
 
-    void GameLoop(Renderer rend);
-    void Test(Renderer rend);
+    void GameLoop(Renderer *renderer);
 
 private:
     DeckOfCards deck;
+
+    struct Hand {
+        std::vector<int> hand;
+        uint score;
+        bool faceup;
+    } dealer, player;
+
+    void DealHands(Renderer *renderer);
+    void PlayPlayerHand(Renderer *renderer);
+    void PlayDealerHand(Renderer *renderer);
+    void ClearHands();
+    void WhoWon(Renderer *renderer);
+    void CenterTexture(SDL_Texture *image, Renderer *renderer);
+    SDL_Texture* LoadTexture(const std::string &file, SDL_Renderer *ren);
+    std::string GetResourcePath(const std::string &subDir = "");
 };
 
 #endif /* CONTROLLER_H */

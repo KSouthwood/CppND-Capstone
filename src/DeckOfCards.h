@@ -57,13 +57,14 @@ public:
 
     void Shuffle();
     int DealCard();
+    int ScoreHand(std::vector<int> hand, DeckOfCards deck);
 
     Card** shoe;
+    bool shuffle;       // do we have to shuffle cards
 
 private:
     int card_to_deal;   // keep track of cards
     int reshuffle;      // point in shoe we have to re-shuffle
-    bool shuffle;       // do we have to shuffle cards
 
     void CreateShoe();
 

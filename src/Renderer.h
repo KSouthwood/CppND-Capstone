@@ -41,12 +41,13 @@ public:
     Renderer(const std::size_t window_width, const std::size_t window_height);
     ~Renderer();
 
-    void Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck);
+    void Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck, bool show);
     bool RendererValid();
 
-private:
-    SDL_Window *window;
     SDL_Renderer *renderer;
+    SDL_Window *window;
+
+private:
 
     const std::size_t window_width;
     const std::size_t window_height;

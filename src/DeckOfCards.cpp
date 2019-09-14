@@ -35,7 +35,16 @@ DeckOfCards::DeckOfCards() {
 DeckOfCards::~DeckOfCards() {
 }
 
+/******************
+ *  Summary: Shuffle the deck of cards
+ *
+ *  Description: Use the Fisher-Yates algorithm to shuffle the deck of cards.
+ *
+ *  Parameter(s):
+ *      N/A
+ */
 void DeckOfCards::Shuffle() {
+    std::cout << "Shuffling cards.\n"; //TODO delete
     // random number generator set-up
     std::random_device ran_dev;
     std::mt19937 ran_engine(ran_dev());
@@ -73,5 +82,40 @@ void DeckOfCards::CreateShoe() {
 }
 
 int DeckOfCards::DealCard() {
-    return card_to_deal++;
+    int card = card_to_deal++;
+    if (card_to_deal == reshuffle) {
+        shuffle = true;
+    }
+    return card;
+}
+
+int DeckOfCards::ScoreHand(std::vector<int> hand, DeckOfCards deck) {
+    int score = 0;
+
+    if (!hand.empty()) {
+        bool soft_count = false;
+        bool has_ace = false;
+
+        for (int card : hand) {
+            if (deck.shoe[card]->GetValue() == 11) {
+                if (!has_ace) {
+                    has_ace = true;
+                    soft_count = true;
+                    score += 11;
+                } else {
+                    score += 1;
+                }
+            } else {
+                score += deck.shoe[card]->GetValue();
+            }
+
+            // check if we're over 21 with soft true
+            if ((score > 21) && soft_count) {
+                soft_count = false;
+                score -= 10;
+            }
+        }
+    }
+
+    return score;
 }

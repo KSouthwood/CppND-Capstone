@@ -50,6 +50,7 @@ Renderer::Renderer(const std::size_t window_width,
     if (renderer == nullptr) {
         std::cout << "SDL_CreateRenderer Error: " << SDL_GetError() << std::endl;
     }
+
 }
 
 /******************
@@ -62,6 +63,7 @@ Renderer::Renderer(const std::size_t window_width,
  */
 
 Renderer::~Renderer() {
+    std::cout << "Renderer destructor called.\n"; //TODO delete
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -77,7 +79,7 @@ Renderer::~Renderer() {
  *      N/A
  */
 
-void Renderer::Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck) {
+void Renderer::Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck, bool show) {
     // clear the window and fill with green background
     SDL_SetRenderDrawColor(renderer, 0x00, 0xA1, 0x00, 0xFF);
     SDL_RenderClear(renderer);
@@ -85,18 +87,20 @@ void Renderer::Render(std::vector<int> dealer, std::vector<int> player, DeckOfCa
     SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
     // draw the dealers hand
-    for (int i = 0; i < dealer.size(); i++) {
+    for (int i = 0; i < (int)dealer.size(); i++) {
         SDL_RenderFillRect(renderer, &d_pos[i]);
-        SDL_Texture *rank = SDL_CreateTextureFromSurface(renderer, deck.shoe[dealer[i]]->GetRank());
-        SDL_Texture *suit = SDL_CreateTextureFromSurface(renderer, deck.shoe[dealer[i]]->GetSuit());
-        SDL_Rect rect_rank = {.x = 40 + (i * 120), .y = 30, .w = 40, .h = 40};
-        SDL_Rect rect_suit = {.x = 40 + (i * 120), .y = 70, .w = 40, .h = 40};
-        SDL_RenderCopy(renderer, rank, NULL, &rect_rank);
-        SDL_RenderCopy(renderer, suit, NULL, &rect_suit);
+        if (i != 0 || show == true) {
+            SDL_Texture *rank = SDL_CreateTextureFromSurface(renderer, deck.shoe[dealer[i]]->GetRank());
+            SDL_Texture *suit = SDL_CreateTextureFromSurface(renderer, deck.shoe[dealer[i]]->GetSuit());
+            SDL_Rect rect_rank = {.x = 40 + (i * 120), .y = 30, .w = 40, .h = 40};
+            SDL_Rect rect_suit = {.x = 40 + (i * 120), .y = 70, .w = 40, .h = 40};
+            SDL_RenderCopy(renderer, rank, NULL, &rect_rank);
+            SDL_RenderCopy(renderer, suit, NULL, &rect_suit);
+        }
     }
 
     // draw the players hand
-    for (int i = 0; i < player.size(); i++) {
+    for (int i = 0; i < (int)player.size(); i++) {
         SDL_RenderFillRect(renderer, &p_pos[i]);
         SDL_Texture *rank = SDL_CreateTextureFromSurface(renderer, deck.shoe[player[i]]->GetRank());
         SDL_Texture *suit = SDL_CreateTextureFromSurface(renderer, deck.shoe[player[i]]->GetSuit());
