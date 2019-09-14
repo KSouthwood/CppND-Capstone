@@ -30,10 +30,10 @@
 #include "Controller.h"
 
 /****** CONSTANTS ******/
-const std::size_t WINDOW_WIDTH = 640;
-const std::size_t WINDOW_HEIGHT = 480;
+const std::size_t WINDOW_WIDTH = 620;
+const std::size_t WINDOW_HEIGHT = 570;
 
-/***** *****/
+/***** MAIN *****/
 int main(int, char**) {
     // Start up SDL
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_TIMER) == 0) {

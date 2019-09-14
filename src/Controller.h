@@ -52,8 +52,6 @@ private:
     void ClearHands();
     void WhoWon(Renderer *renderer);
     void CenterTexture(SDL_Texture *image, Renderer *renderer);
-    SDL_Texture* LoadTexture(const std::string &file, SDL_Renderer *ren);
-    std::string GetResourcePath(const std::string &subDir = "");
 };
 
 #endif /* CONTROLLER_H */

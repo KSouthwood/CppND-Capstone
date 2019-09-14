@@ -36,6 +36,16 @@
 const static std::size_t CARD_WIDTH  = 100;
 const static std::size_t CARD_HEIGHT = 150;
 
+const static SDL_Color col_bkgrd = {0x00, 0xA1, 0x00, 0xFF};
+const static SDL_Color col_card  = {0xFF, 0xFF, 0xFF, 0xFF};
+const static SDL_Color col_badge = {0x00, 0xBF, 0xFF, 0xFF};
+
+const static SDL_Rect box_dealer = {220,  20, 175, 50};
+const static SDL_Rect box_player = {220, 260, 175, 50};
+const static SDL_Rect choice_one = {135, 500, 175, 50};
+const static SDL_Rect choice_two = {330, 500, 175, 50};
+
+
 class Renderer {
 public:
     Renderer(const std::size_t window_width, const std::size_t window_height);
@@ -43,6 +53,8 @@ public:
 
     void Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck, bool show);
     bool RendererValid();
+    std::string GetResourcePath(const std::string &subDir = "");
+    SDL_Texture* LoadTexture(const std::string &file);
 
     SDL_Renderer *renderer;
     SDL_Window *window;
@@ -54,19 +66,19 @@ private:
 
     // Card positions
     const SDL_Rect d_pos[5] = {
-        {.x =  30, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 150, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 270, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 390, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 510, .y = 20, .w = CARD_WIDTH, .h = CARD_HEIGHT}
+        {.x =  20, .y = 90, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 140, .y = 90, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 260, .y = 90, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 380, .y = 90, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 500, .y = 90, .w = CARD_WIDTH, .h = CARD_HEIGHT}
     };
 
     const SDL_Rect p_pos[5] = {
-        {.x =  30, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 150, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 270, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 390, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT},
-        {.x = 510, .y = 220, .w = CARD_WIDTH, .h = CARD_HEIGHT}
+        {.x =  20, .y = 330, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 140, .y = 330, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 260, .y = 330, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 380, .y = 330, .w = CARD_WIDTH, .h = CARD_HEIGHT},
+        {.x = 500, .y = 330, .w = CARD_WIDTH, .h = CARD_HEIGHT}
     };
 };
 

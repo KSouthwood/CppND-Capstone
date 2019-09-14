@@ -46,7 +46,6 @@ Card::Card(const std::string rank_file, const std::string suit_file, int val) {
 }
 
 Card::~Card() {
-    std::cout << "Card destructor called.\n"; //TODO delete
     SDL_FreeSurface(rank);
     SDL_FreeSurface(suit);
 }

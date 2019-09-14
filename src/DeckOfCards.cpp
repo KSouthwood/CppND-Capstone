@@ -44,7 +44,6 @@ DeckOfCards::~DeckOfCards() {
  *      N/A
  */
 void DeckOfCards::Shuffle() {
-    std::cout << "Shuffling cards.\n"; //TODO delete
     // random number generator set-up
     std::random_device ran_dev;
     std::mt19937 ran_engine(ran_dev());
@@ -54,6 +53,7 @@ void DeckOfCards::Shuffle() {
     Card *temp;
     std::size_t swap;
 
+    // Fisher-Yates shuffle algorithm
     for (std::size_t card = cards_in_deck - 1; card > 0; card--) {
         swap = card_to_swap(ran_engine) % card;
 
@@ -69,6 +69,15 @@ void DeckOfCards::Shuffle() {
     return;
 }
 
+/******************
+ *  Summary: Create the deck of cards
+ *
+ *  Description: Iterate through the array of cards and instantiate each one
+ *      with the BMP filenames for the textures and the value of each card.
+ *
+ *  Parameter(s):
+ *      N/A
+ */
 void DeckOfCards::CreateShoe() {
     shoe = new Card*[cards_in_deck];
 
@@ -81,6 +90,16 @@ void DeckOfCards::CreateShoe() {
     }
 }
 
+/******************
+ *  Summary: Deals a card
+ *
+ *  Description: Returns the index of the current card to be dealt, then
+ *      increments the counter. Also checks if we've hit our re-shuffle point
+ *      and sets the shuffle flag to true if we have.
+ *
+ *  Parameter(s):
+ *      N/A
+ */
 int DeckOfCards::DealCard() {
     int card = card_to_deal++;
     if (card_to_deal == reshuffle) {
@@ -89,6 +108,15 @@ int DeckOfCards::DealCard() {
     return card;
 }
 
+/******************
+ *  Summary: Calculate the score of a hand
+ *
+ *  Description: Calculates the value of a hand accounting for the variance in
+ *      Aces (soft or hard count).
+ *
+ *  Parameter(s):
+ *      N/A
+ */
 int DeckOfCards::ScoreHand(std::vector<int> hand, DeckOfCards deck) {
     int score = 0;
 
