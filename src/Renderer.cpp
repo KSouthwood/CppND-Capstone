@@ -75,7 +75,7 @@ Renderer::~Renderer() {
  *  Parameter(s):
  *      N/A
  */
-void Renderer::Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck, bool show) {
+void Renderer::RenderTable(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck, bool show) {
     const std::string res_path = GetResourcePath();
 
     // clear the window and fill with green background
@@ -127,9 +127,6 @@ void Renderer::Render(std::vector<int> dealer, std::vector<int> player, DeckOfCa
         SDL_RenderCopy(renderer, rank, NULL, &rect_rank);
         SDL_RenderCopy(renderer, suit, NULL, &rect_suit);
     }
-
-    // finally, update the window
-    SDL_RenderPresent(renderer);
 }
 
 /******************

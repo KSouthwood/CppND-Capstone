@@ -50,7 +50,8 @@ void Controller::GameLoop(Renderer *renderer) {
 
         // ensure we start each hand off fresh
         ClearHands();
-        renderer->Render(dealer.hand, player.hand, deck, dealer.faceup);
+        renderer->RenderTable(dealer.hand, player.hand, deck, dealer.faceup);
+        SDL_RenderPresent(renderer->renderer);
 
         // deal initial cards
         DealHands(renderer);
@@ -140,11 +141,13 @@ void Controller::ClearHands() {
 void Controller::DealHands(Renderer *renderer) {
     for (int i = 0; i < 2; i++) {
         player.hand.push_back(deck.DealCard());
-        renderer->Render(dealer.hand, player.hand, deck, dealer.faceup);
+        renderer->RenderTable(dealer.hand, player.hand, deck, dealer.faceup);
+        SDL_RenderPresent(renderer->renderer);
         SDL_Delay(200);
 
         dealer.hand.push_back(deck.DealCard());
-        renderer->Render(dealer.hand, player.hand, deck, dealer.faceup);
+        renderer->RenderTable(dealer.hand, player.hand, deck, dealer.faceup);
+        SDL_RenderPresent(renderer->renderer);
         SDL_Delay(200);
     }
 
@@ -197,8 +200,9 @@ void Controller::PlayPlayerHand(Renderer *renderer) {
 
             if (hit == true) {
                 player.hand.push_back(deck.DealCard());
-                renderer->Render(dealer.hand, player.hand, deck, dealer.faceup);
                 player.score = deck.ScoreHand(player.hand, deck);
+                renderer->RenderTable(dealer.hand, player.hand, deck, dealer.faceup);
+                SDL_RenderPresent(renderer->renderer);
 
                 if (player.score > 21 || player.hand.size() == 5) {
                     done = true; // player busted or has the max cards
@@ -207,7 +211,7 @@ void Controller::PlayPlayerHand(Renderer *renderer) {
         }
     }
 
-    SDL_Delay(200);
+//    SDL_Delay(200);
 }
 
 /***************
@@ -222,13 +226,15 @@ void Controller::PlayPlayerHand(Renderer *renderer) {
 void Controller::PlayDealerHand(Renderer *renderer) {
     // show dealers hole card
     dealer.faceup = true;
-    renderer->Render(dealer.hand, player.hand, deck, dealer.faceup);
+    renderer->RenderTable(dealer.hand, player.hand, deck, dealer.faceup);
+    SDL_RenderPresent(renderer->renderer);
     SDL_Delay(800);
 
     while (dealer.score < 17 && dealer.hand.size() < 5) {
         dealer.hand.push_back(deck.DealCard());
         dealer.score = deck.ScoreHand(dealer.hand, deck);
-        renderer->Render(dealer.hand, player.hand, deck, dealer.faceup);
+        renderer->RenderTable(dealer.hand, player.hand, deck, dealer.faceup);
+        SDL_RenderPresent(renderer->renderer);
         SDL_Delay(250);
     }
 }
@@ -243,6 +249,8 @@ void Controller::PlayDealerHand(Renderer *renderer) {
  *  	N/A
  */
 void Controller::WhoWon(Renderer *renderer) {
+    renderer->RenderTable(dealer.hand, player.hand, deck, dealer.faceup);
+
     const std::string res_path = renderer->GetResourcePath();
     SDL_Texture *winner = renderer->LoadTexture(res_path + "YouWon!.bmp");
     SDL_Texture *loser = renderer->LoadTexture(res_path + "YouLost!.bmp");
@@ -271,6 +279,8 @@ void Controller::WhoWon(Renderer *renderer) {
     else {
         CenterTexture(tie, renderer);
     }
+
+    SDL_RenderPresent(renderer->renderer);
 }
 
 /***************
@@ -291,5 +301,4 @@ void Controller::CenterTexture(SDL_Texture* image, Renderer *renderer) {
     dest.y = (win.y / 2) - (dest.h / 2);
 
     SDL_RenderCopy(renderer->renderer, image, NULL, &dest);
-    SDL_RenderPresent(renderer->renderer);
 }

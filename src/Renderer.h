@@ -51,7 +51,7 @@ public:
     Renderer(const std::size_t window_width, const std::size_t window_height);
     ~Renderer();
 
-    void Render(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck, bool show);
+    void RenderTable(std::vector<int> dealer, std::vector<int> player, DeckOfCards deck, bool show);
     bool RendererValid();
     std::string GetResourcePath(const std::string &subDir = "");
     SDL_Texture* LoadTexture(const std::string &file);
