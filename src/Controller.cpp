@@ -44,7 +44,7 @@ void Controller::GameLoop(Renderer *renderer) {
 
     while (!game_over) {
         // shuffle cards if needed
-        if (deck.shuffle) {
+        if (deck.NeedShuffle()) {
             deck.Shuffle();
         }
 

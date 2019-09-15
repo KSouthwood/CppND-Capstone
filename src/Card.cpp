@@ -27,8 +27,8 @@ Card::Card() {
 
 }
 
-Card::Card(const std::string rank_file, const std::string suit_file, int val) {
-    value = val;
+Card::Card(const std::string rank_file, const std::string suit_file, int val) :
+    value(val) {
 
     std::string basepath = GetResourcePath();
     std::string rankpath = basepath + rank_file;

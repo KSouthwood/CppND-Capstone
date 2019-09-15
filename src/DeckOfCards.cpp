@@ -25,10 +25,7 @@
 #include "DeckOfCards.h"
 
 
-DeckOfCards::DeckOfCards() {
-    card_to_deal = 0;
-    reshuffle = 0;
-    shuffle = true;
+DeckOfCards::DeckOfCards() : shuffle(true), card_to_deal(0), reshuffle(0) {
     CreateShoe();
 }
 
@@ -146,4 +143,8 @@ int DeckOfCards::ScoreHand(std::vector<int> hand, DeckOfCards deck) {
     }
 
     return score;
+}
+
+bool DeckOfCards::NeedShuffle() {
+    return shuffle;
 }

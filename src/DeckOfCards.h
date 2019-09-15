@@ -63,11 +63,12 @@ public:
     void Shuffle();
     int DealCard();
     int ScoreHand(std::vector<int> hand, DeckOfCards deck);
+    bool NeedShuffle();
 
     Card** shoe;
-    bool shuffle;       // do we have to shuffle cards
 
 private:
+    bool shuffle;       // do we have to shuffle cards
     int card_to_deal;   // keep track of cards
     int reshuffle;      // point in shoe we have to re-shuffle
 
